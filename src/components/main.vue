@@ -11,8 +11,8 @@
       <div class="films" v-for="film in movies" :key="film.id">
         <!-- copertina -->
         <div class="cover">
-          <img v-if="film.poster_path" :src="coverLink + film.poster_path" alt="">
-          <img v-else src="https://bitsofco.de/content/images/2018/12/broken-1.png" alt="">
+          <img v-if="film.poster_path" :src="coverLink + film.poster_path" :alt="film.title">
+          <img v-else src="https://bitsofco.de/content/images/2018/12/broken-1.png" :alt="film.title">
         </div>
         <!-- titolo -->
         <div class="title">
@@ -29,9 +29,9 @@
         </div>
         <!-- /titolo originale -->
         <!-- voto -->
-        <div class="vote">
-          <h3>vote: {{film.vote_average}} </h3>
-        </div>
+        <span class="vote" v-for="finalVote in Math.round(film.vote_average / 2)" :key="finalVote">
+          <img  src="../assets/star-solid.svg" alt="">
+        </span>
         <!-- /voto -->
         <!-- sezione flag e language -->
         <div class="lenguage">
@@ -122,4 +122,9 @@ export default {
 </script>
 
 <style lang="scss">
+  .vote{
+    img{
+      width: 15px;
+    }
+  }
 </style>
