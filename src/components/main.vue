@@ -9,6 +9,11 @@
     <!-- container film  -->
     <section class="show_films">
       <div class="films" v-for="film in movies" :key="film.id">
+        <!-- copertina -->
+        <div class="cover">
+          <img v-if="film.poster_path" :src="coverLink + film.poster_path" alt="">
+          <img v-else src="https://bitsofco.de/content/images/2018/12/broken-1.png" alt="">
+        </div>
         <!-- titolo -->
         <div class="title">
           <h1 v-if="film.title">titolo:{{ film.title }}</h1>
@@ -69,7 +74,7 @@ export default {
       apiFilm:'https://api.themoviedb.org/3/search/movie?api_key=',
       apiSeries:'https://api.themoviedb.org/3/search/tv?api_key=',
       movies: [],
-      en: "https://img.icons8.com/color/48/000000/great-britain-circular.png",
+      coverLink: 'http://image.tmdb.org/t/p/w500/',
     };
   },
   methods: {
