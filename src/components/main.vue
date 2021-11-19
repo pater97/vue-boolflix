@@ -8,11 +8,12 @@
     <!-- /sezione barra di ricerca   -->
     <!-- container film  -->
     <section class="show_films">
-      <div class="films" v-for="film in moviesArray" :key="film.id">
+      <div class="films" v-for="film in movies" :key="film.id">
         <h1>titolo:{{ film.title }}</h1>
         <h2>titolo originale: {{ film.original_title }}</h2>
         <h5>lenguage: {{ film.original_language}}</h5>
         <h3>vote: {{ film.vote_average }}</h3>
+        <country-flag :country='film.original_language' size='normal'/>
         <hr />
       </div>
     </section>
@@ -22,11 +23,16 @@
 
 <script>
 import axios from "axios";
+import CountryFlag from 'vue-country-flag'
 export default {
+  components:{
+    CountryFlag
+  },
   data() {
     return {
       searchText: "",
-      moviesArray: [],
+      movies: [],
+      en:'https://img.icons8.com/color/48/000000/great-britain-circular.png',
     };
   },
   methods: {
@@ -38,8 +44,8 @@ export default {
             this.searchText
         )
         .then((response) => {
-          this.moviesArray = response.data.results;
-          console.log(this.moviesArray);
+          this.movies = response.data.results;
+          console.log(this.movies);
         })
         .catch((e) => {
           console.log(e, "ops!");
