@@ -30,7 +30,7 @@
         <!-- /titolo originale -->
         <!-- voto -->
         <div class="vote">
-          <h3>vote: {{ film.vote_average }}</h3>
+          <h3>vote: {{film.vote_average}} </h3>
         </div>
         <!-- /voto -->
         <!-- sezione flag e language -->
@@ -63,9 +63,15 @@
 <script>
 import axios from "axios";
 import CountryFlag from "vue-country-flag";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faUserSecret)
 export default {
   components: {
     CountryFlag,
+    // FontAwesomeIcon
   },
   data() {
     return {
