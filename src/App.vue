@@ -67,6 +67,11 @@ export default {
 </script>
 
 <style lang="scss">
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 body {
   font-family: "Bebas Neue";
   background-color: #141414;

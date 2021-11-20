@@ -1,11 +1,9 @@
 <template>
-  <div>
+  <div class="container_main">
     <!-- container film  -->
     <section class="show_films">
       <div class="films" v-for="film in movies" :key="film.id">
         <cards :film="film" />
-        <!-- barra temporanea per marcare la divisione  -->
-        <hr />
       </div>
     </section>
     <!-- / container film  -->
@@ -25,9 +23,14 @@ export default {
 </script>
 
 <style lang="scss">
-.vote {
-  img {
-    width: 15px;
+.show_films{
+  display: flex;
+  flex-wrap: wrap;
+  width: 97%;
+  margin: auto;
+  .films{
+    width: calc(100%/5);
+    margin: 2rem 0;
   }
 }
 </style>

@@ -1,30 +1,43 @@
 <template>
-    <div>
-    <h1 class="logo">BOOLFLIX</h1>
-     <!-- sezione barra di ricerca   -->
+  <div class="container_header">
+      <!-- logo  -->
+    <div class="logo">
+      <h1>BOOLFLIX</h1>
+    </div>
+    <!-- sezione barra di ricerca   -->
     <section class="search_bar">
       <input
-       v-model="searchText"
-       type="text"
-       placeholder="Search"
-       @keyup.enter="$emit('getCall',searchText)" />
-      <!-- <button class="search_btn" @click="getCall">search</button> -->
+        v-model="searchText"
+        type="text"
+        placeholder="Search"
+        @keyup.enter="$emit('getCall', searchText)"
+      />
     </section>
-    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-            searchText : ""
-        }
-    }
-}
+  data() {
+    return {
+      searchText: "",
+    };
+  },
+};
 </script>
 
 <style lang="scss">
-    .logo{
-        color: red;
+.container_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    margin: 1rem auto;
+}
+.logo {
+    h1{
+        color: #e50914;
+        font-size: 3rem;
     }
+}
 </style>
