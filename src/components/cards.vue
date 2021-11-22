@@ -82,7 +82,7 @@
       </div>
       <!-- in caso di informazioni del cast positive  -->
       <div :class="{ hidden_cast: castTabNone, castClass: castTab }">
-        <div v-if="cast.length > 0">
+        <div v-if="cast.length !== 0">
           <h1>CAST:</h1>
           <div class="cycleCast" v-for="item in cast" :key="item.name">
             <h5>{{ item.name }}</h5>
@@ -94,6 +94,9 @@
         <!-- se il cast non è disponibile  -->
         <div v-else>
           <span class="cast_not_found">Cast not avalabile</span>
+          <div class="closeTab" @click="closeTab">
+            <h2>Close</h2>
+          </div>
         </div>
       </div>
     </section>
@@ -110,6 +113,7 @@ export default {
   },
   props: {
     film: Object,
+    generi:Array
   },
   data() {
     return {
@@ -125,12 +129,19 @@ export default {
     // funzione per aggiungere all'array cast i relativi dati tramite chiamata api 
     getCast(filmId) {
       axios
-        .get(this.apiUrl + filmId + this.apiKey)
+        .get(this.apiUrl + filmId +  this.apiKey)
         .then((response) => {
           this.cast = [];
-          for (let i = 0; i < 5; i++) {
-            this.cast.push(response.data.cast[i]);
+          if(response.data.cast.length >= 5){
+            for (let i = 0; i < 5; i++) {
+              this.cast.push(response.data.cast[i]);
+            }
+          }else {
+            for(let i = 0; i < response.data.cast.length;i++){
+              this.cast.push(response.data.cast[i]);
+            }
           }
+          console.log(this.cast);
         })
         .catch((e) => {
           console.log(e, "ops!");

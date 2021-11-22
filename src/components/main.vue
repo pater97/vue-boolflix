@@ -3,7 +3,7 @@
     <!-- container film  -->
     <section class="show_films" v-if="ifEmpty()">
       <div class="films" v-for="film in movies" :key="film.id" >
-        <cards :film="film"/>
+        <cards :film="film" :generi="generi"/>
       </div>
     </section>
     <section class="search_films" v-else>
@@ -21,6 +21,7 @@ export default {
   },
   props: {
     movies: Array,
+    generi:Array
   },
   methods:{
     ifEmpty(){

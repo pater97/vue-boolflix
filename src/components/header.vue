@@ -3,6 +3,7 @@
       <!-- logo  -->
     <div class="logo">
       <h1>BOOLFLIX</h1>
+      <!-- link menu selezione  -->
       <a href="#">Home</a>
       <a href="#">Serie tv</a>
       <a href="#">Film</a>
@@ -17,6 +18,7 @@
         placeholder="Search"
         @keyup.enter="$emit('getCall', searchText)"
       />
+      <!-- link per info account  -->
       <a href="#">Bambini</a>
       <img class="icon" src="../assets/bell-solid.svg" alt="">
       <img class="avatar" src="../assets/net-avatar.png" alt="">

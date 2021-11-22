@@ -3,7 +3,7 @@
     <!-- header -->
     <siteHeader @getCall="getCall" />
     <!-- main -->
-    <siteMain :movies="movies" />
+    <siteMain :movies="movies" :generi="generi"/>
   </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
       apiKey: "f4f382566368553eb6b723d584f2ef40&query=",
       apiFilm: "https://api.themoviedb.org/3/search/movie?api_key=",
       apiSeries: "https://api.themoviedb.org/3/search/tv?api_key=",
+      generi:[]
     };
   },
   methods: {
@@ -63,6 +64,17 @@ export default {
         });
     },
   },
+  mounted(){
+      axios
+        .get('https://api.themoviedb.org/3/genre/tv/list?api_key=f4f382566368553eb6b723d584f2ef40&language=en-US')
+        .then((response) => {
+          this.generi = response.data.genres;
+          console.log(this.generi);
+        })
+        .catch((e) => {
+          console.log(e, "ops!");
+        });
+  }
 };
 </script>
 
