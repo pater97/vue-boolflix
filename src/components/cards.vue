@@ -17,6 +17,7 @@
         :alt="film.title"
       />
     </section>
+    <!-- sezione informazioni  -->
     <section class="info">
       <!-- titolo -->
       <div class="title">
@@ -35,6 +36,7 @@
       </div>
       <!-- voto -->
       <div class="stars">
+        <span>Vote: </span>
         <span
           class="vote"
           v-for="finalVote in Math.round(film.vote_average / 2)"
@@ -85,6 +87,9 @@
           <div class="cycleCast" v-for="item in cast" :key="item.name">
             <h5>{{ item.name }}</h5>
           </div>
+          <div class="closeTab" @click="closeTab">
+            <h2>Close</h2>
+          </div>
         </div>
         <!-- se il cast non è disponibile  -->
         <div v-else>
@@ -117,6 +122,7 @@ export default {
     };
   },
   methods: {
+    // funzione per aggiungere all'array cast i relativi dati tramite chiamata api 
     getCast(filmId) {
       axios
         .get(this.apiUrl + filmId + this.apiKey)
@@ -124,23 +130,29 @@ export default {
           this.cast = [];
           for (let i = 0; i < 5; i++) {
             this.cast.push(response.data.cast[i]);
-            console.log(this.cast);
           }
         })
         .catch((e) => {
           console.log(e, "ops!");
         });
     },
+    // funzione che richiama api e cambia la classe della tab 
     getTab(filmID) {
       this.getCast(filmID);
       this.castTab = true;
       this.castTabNone = false;
+    },
+    // funzione per cambiare classe tab e farla scomparire 
+    closeTab() {
+      this.castTab = false;
+      this.castTabNone = true;
     },
   },
 };
 </script>
 
 <style lang="scss">
+// impostazioni formattazione card 
 .card {
   width: 90%;
   height: 21rem;
@@ -160,6 +172,7 @@ export default {
   &:hover .info {
     z-index: 11;
   }
+  // impostazioni copertina 
   .cover {
     img {
       width: 100%;
@@ -169,6 +182,7 @@ export default {
       object-fit: cover;
     }
   }
+  // impostazioni testo info sopra copertina
   .info {
     position: absolute;
     z-index: 9;
@@ -185,6 +199,12 @@ export default {
     .original_title {
       font-size: 0.8rem;
     }
+    .vote {
+      img {
+        width: 15px;
+        filter: invert(1);
+      }
+    }
     .stars {
       margin: 0.5rem 0;
     }
@@ -197,6 +217,7 @@ export default {
       overflow-y: auto;
       margin: 0.5rem 0;
     }
+    // link ancioraggio per apertura tab cast 
     .more_info {
       h5 {
         color: red;
@@ -205,6 +226,7 @@ export default {
         }
       }
     }
+    // tab cast 
     .castClass {
       background: black;
       padding: 1rem;
@@ -214,25 +236,40 @@ export default {
       top: 0;
       left: 0;
       color: white;
-      h1{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      h1 {
         color: red;
       }
+      .cycleCast {
+        padding: 1rem 0;
+      }
+      .cast_not_found {
+        color: red;
+      }
+      // link per chiusura tab cast 
+      .closeTab {
+        padding-top: 3rem;
+        h2 {
+          background-color: white;
+          padding: 0.3rem 0;
+          border-radius: 10px;
+          color: red;
+          &:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0px 0px 10px 5px red;
+            transition: all 1s;
+          }
+        }
+      }
     }
+    // classe per nascondere la cast tab 
     .hidden_cast {
       display: none;
     }
-    .cycleCast{
-      padding: 1rem;
-    }
-    .cast_not_found{
-      color: red;
-    }
-  }
-}
-.vote {
-  img {
-    width: 15px;
-    filter: invert(1);
   }
 }
 </style>
