@@ -36,7 +36,6 @@
       </div>
       <!-- voto -->
       <div class="stars">
-        <span>Vote: </span>
         <span
           class="vote"
           v-for="finalVote in Math.round(film.vote_average / 2)"
@@ -78,14 +77,24 @@
       <!-- sezione per mostrare il cast  -->
       <!-- ancoraggio per richiamare la tab  -->
       <div class="more_info" @click="getTab(film.id)">
-        <h5>SHOW CAST...</h5>
+        <h5>MORE INFO...</h5>
       </div>
       <!-- in caso di informazioni del cast positive  -->
       <div :class="{ hidden_cast: castTabNone, castClass: castTab }">
         <div v-if="cast.length !== 0">
           <h1>CAST:</h1>
-          <div class="cycleCast" v-for="item in cast" :key="item.name">
-            <h5>{{ item.name }}</h5>
+          <div class="cycleCast">
+            <div v-for="item in cast" :key="item.name">
+              <h5>{{ item.name }}</h5>
+            </div>
+          </div>
+          <div class="similar_gen">
+            <h5 class="gen_title">GENERE/I:</h5>
+            <div v-for="genere in generi" :key="genere.name">
+              <h5 v-if="film.genre_ids.includes(genere.id)">
+                {{ genere.name }}
+              </h5>
+            </div>
           </div>
           <div class="closeTab" @click="closeTab">
             <h2>Close</h2>
@@ -113,7 +122,7 @@ export default {
   },
   props: {
     film: Object,
-    generi:Array
+    generi: Array,
   },
   data() {
     return {
@@ -126,18 +135,18 @@ export default {
     };
   },
   methods: {
-    // funzione per aggiungere all'array cast i relativi dati tramite chiamata api 
+    // funzione per aggiungere all'array cast i relativi dati tramite chiamata api
     getCast(filmId) {
       axios
-        .get(this.apiUrl + filmId +  this.apiKey)
+        .get(this.apiUrl + filmId + this.apiKey)
         .then((response) => {
           this.cast = [];
-          if(response.data.cast.length >= 5){
+          if (response.data.cast.length >= 5) {
             for (let i = 0; i < 5; i++) {
               this.cast.push(response.data.cast[i]);
             }
-          }else {
-            for(let i = 0; i < response.data.cast.length;i++){
+          } else {
+            for (let i = 0; i < response.data.cast.length; i++) {
               this.cast.push(response.data.cast[i]);
             }
           }
@@ -147,13 +156,13 @@ export default {
           console.log(e, "ops!");
         });
     },
-    // funzione che richiama api e cambia la classe della tab 
+    // funzione che richiama api e cambia la classe della tab
     getTab(filmID) {
       this.getCast(filmID);
       this.castTab = true;
       this.castTabNone = false;
     },
-    // funzione per cambiare classe tab e farla scomparire 
+    // funzione per cambiare classe tab e farla scomparire
     closeTab() {
       this.castTab = false;
       this.castTabNone = true;
@@ -163,7 +172,7 @@ export default {
 </script>
 
 <style lang="scss">
-// impostazioni formattazione card 
+// impostazioni formattazione card
 .card {
   width: 90%;
   height: 21rem;
@@ -176,6 +185,7 @@ export default {
   &:hover {
     box-shadow: 0px 0px 12px 1px #e50914;
     transform: scale(105%);
+    transition: all 1s;
   }
   &:hover .cover_img {
     filter: blur(5px) brightness(0.5);
@@ -183,7 +193,7 @@ export default {
   &:hover .info {
     z-index: 11;
   }
-  // impostazioni copertina 
+  // impostazioni copertina
   .cover {
     img {
       width: 100%;
@@ -217,7 +227,7 @@ export default {
       }
     }
     .stars {
-      margin: 0.5rem 0;
+      margin-top: 1rem;
     }
     .lenguage {
       display: flex;
@@ -228,7 +238,7 @@ export default {
       overflow-y: auto;
       margin: 0.5rem 0;
     }
-    // link ancioraggio per apertura tab cast 
+    // link ancioraggio per apertura tab cast
     .more_info {
       h5 {
         color: red;
@@ -237,7 +247,7 @@ export default {
         }
       }
     }
-    // tab cast 
+    // tab cast
     .castClass {
       background: black;
       padding: 1rem;
@@ -255,14 +265,32 @@ export default {
         color: red;
       }
       .cycleCast {
-        padding: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        height: 7rem;
+        div{
+          padding: .5rem;
+        }
+      }
+      .similar_gen{
+        height: 6rem;
+        display: flex;
+        flex-direction: column;
+        margin-top: 1.5rem;
+        .gen_title{
+          color: red;
+        }
+        div{
+          font-size: .8rem;
+        }
       }
       .cast_not_found {
         color: red;
       }
-      // link per chiusura tab cast 
+      // link per chiusura tab cast
       .closeTab {
-        padding-top: 3rem;
+        margin-top: .7rem;
+        height: 5rem;
         h2 {
           background-color: white;
           padding: 0.3rem 0;
@@ -277,7 +305,7 @@ export default {
         }
       }
     }
-    // classe per nascondere la cast tab 
+    // classe per nascondere la cast tab
     .hidden_cast {
       display: none;
     }
