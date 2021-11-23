@@ -13,6 +13,7 @@
   </div>
 </template>
 
+
 <script>
 import cards from "./cards.vue";
 export default {
@@ -34,6 +35,7 @@ export default {
   }
 };
 </script>
+
 
 <style lang="scss">
 .show_films , .search_films{

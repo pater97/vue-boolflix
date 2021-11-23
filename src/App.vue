@@ -7,12 +7,14 @@
   </div>
 </template>
 
+
 <script>
 // importazioni
 import siteHeader from "./components/header.vue";
 import siteMain from "./components/main.vue";
 import axios from "axios";
 import "@fontsource/bebas-neue";
+
 
 export default {
   name: "App",
